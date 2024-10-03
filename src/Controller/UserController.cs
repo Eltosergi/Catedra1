@@ -6,6 +6,7 @@ using Catedra_1.src.Dtos;
 using Catedra_1.src.Interface;
 using Catedra_1.src.Mappers;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 
 namespace Catedra_1.src.Controller
 {
@@ -34,9 +35,49 @@ namespace Catedra_1.src.Controller
         public async Task<IActionResult> Post([FromBody] CreateUserRquestDto userRquestDto)
         {
             var userModel = userRquestDto.ToUserFromCreateDto();
+            var existingUser = await _UserRepository.GetByRut(userModel.Rut);
+            if (existingUser != null)
+            {
+                return Conflict("El RUT ya existe."); 
+            }
+            if(userModel.Name.Length < 3 || !isValid(userModel.Email) || !EsFechaValida(userModel.BirthDay)){
+                return BadRequest("Alguna validación no fue cumplida.");
+            }
+
             await _UserRepository.Post(userModel);
             return CreatedAtAction(nameof(GetById), new { id = userModel.Id }, userModel.ToUserDto());
         }
+
+        public static bool isValid(string email)
+        {
+            
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
+
+            string patronCorreo = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return Regex.IsMatch(email, patronCorreo);
+        }
+        public static bool EsFechaValida(string fechaNacimiento)
+        {
+            
+            string formato = "dd/MM/yyyy";
+            
+            
+            if (DateTime.TryParseExact(fechaNacimiento, formato, 
+                                    System.Globalization.CultureInfo.InvariantCulture, 
+                                    System.Globalization.DateTimeStyles.None, 
+                                    out DateTime fechaConvertida))
+            {
+                
+                if (fechaConvertida < DateTime.Now)
+                {
+                    return true; 
+                }
+            }
+
+            return false; 
+        }
+
     }
 
     

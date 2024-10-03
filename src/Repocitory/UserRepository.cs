@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Catedra_1.src.Data;
 using Catedra_1.src.Interface;
 using Catedra_1.src.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Catedra_1.src.Repocitory
 {
@@ -19,6 +20,11 @@ namespace Catedra_1.src.Repocitory
         public async Task<User?> GetById(int id)
         {
             return await _context.Users.FindAsync(id);
+        }
+
+        public async Task<User?> GetByRut(string Rut)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Rut == Rut);
         }
 
         public async Task<User> Post(User user)

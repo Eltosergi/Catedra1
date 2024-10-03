@@ -8,7 +8,8 @@ namespace Catedra_1.src.Interface
 {
     public interface IUserRepository
     {
-        Task<User?> GetById(int id);       
+        Task<User?> GetById(int id); 
+        Task<User?> GetByRut(string Rut);         
         Task<User> Post(User user);
     }
 }

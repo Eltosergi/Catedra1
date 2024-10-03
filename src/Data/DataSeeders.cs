@@ -12,7 +12,10 @@ namespace Catedra_1.src.Data
         public static void Initialize(IServiceProvider serviceProvider)
         {
             using (var scope = serviceProvider.CreateScope())
-            {
+            {   
+                Dictionary<string, string> diccionario = new Dictionary<string, string>();
+                diccionario.Add("Male", "masculino");
+                diccionario.Add("Female", "femenino");
                 var services = scope.ServiceProvider;
                 var context = services.GetRequiredService<ApplicationDBContext>();
 
@@ -24,7 +27,7 @@ namespace Catedra_1.src.Data
                         .RuleFor(u => u.Rut, f => GenerateUniqueRandomRut(existingRuts))
                         .RuleFor(p => p.Name, f => f.Person.FullName)
                         .RuleFor(p => p.Email, f => f.Person.Email)
-                        .RuleFor(p => p.Gender, f => f.Person.Gender.ToString())
+                        .RuleFor(p => p.Gender, f => diccionario[f.Person.Gender.ToString()])
                         .RuleFor(p => p.BirthDay, f => f.Date.Past(30, DateTime.Now.AddYears(-18)).ToString("yyyy-MM-dd"));
                                     
                     var products = UserFaker.Generate(10);
