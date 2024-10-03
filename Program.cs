@@ -1,4 +1,6 @@
 using Catedra_1.src.Data;
+using Catedra_1.src.Interface;
+using Catedra_1.src.Repocitory;
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,8 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 Env.Load();
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 string connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") ?? "Data Source-app.db";
 builder.Services.AddDbContext<ApplicationDBContext>(opt => opt.UseSqlite(connectionString));
@@ -30,8 +34,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-
+app.MapControllers();
 app.Run();
 
 
