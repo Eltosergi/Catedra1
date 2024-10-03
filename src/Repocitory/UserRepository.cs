@@ -17,6 +17,11 @@ namespace Catedra_1.src.Repocitory
             _context = context;
         }
 
+        public async Task<List<User>> GetAll()
+        {
+             return await _context.Users.ToListAsync();
+        }
+
         public async Task<User?> GetById(int id)
         {
             return await _context.Users.FindAsync(id);

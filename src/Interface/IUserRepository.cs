@@ -11,5 +11,6 @@ namespace Catedra_1.src.Interface
         Task<User?> GetById(int id); 
         Task<User?> GetByRut(string Rut);         
         Task<User> Post(User user);
+        Task <List<User>> GetAll(); 
     }
 }

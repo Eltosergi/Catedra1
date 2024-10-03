@@ -20,6 +20,15 @@ namespace Catedra_1.src.Controller
            _UserRepository = userRepository;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var products = await _UserRepository.GetAll();
+            var productDto = products.Select(p => p.ToUserDto());
+            
+            return Ok(productDto);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
