@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Catedra_1.src.Dtos;
 using Catedra_1.src.Models;
 
 namespace Catedra_1.src.Interface
@@ -14,5 +15,6 @@ namespace Catedra_1.src.Interface
         Task <List<User>> GetAll(); 
 
         Task<User?> Delete(int id);
+        Task<User?> Put(int id, UpdateUserRequestDto userDto);
     }
 }

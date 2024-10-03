@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Catedra_1.src.Data;
+using Catedra_1.src.Dtos;
 using Catedra_1.src.Interface;
 using Catedra_1.src.Models;
 using Microsoft.EntityFrameworkCore;
@@ -49,6 +50,23 @@ namespace Catedra_1.src.Repocitory
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
             return user;
+        }
+
+        public async Task<User?> Put(int id, UpdateUserRequestDto userDto)
+        {
+            var userModel = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            if (userModel == null)
+            {
+                throw new Exception("Product not found");
+            }
+            userModel.Name = userDto.Name;
+            userModel.Email = userDto.Email;
+            userModel.Gender = userDto.Gender;
+            userModel.BirthDay = userDto.BirthDay;
+            userModel.Rut = userDto.Rut;
+
+            await _context.SaveChangesAsync();
+            return userModel;
         }
     }
 }

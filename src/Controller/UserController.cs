@@ -69,6 +69,17 @@ namespace Catedra_1.src.Controller
             return Ok();
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] UpdateUserRequestDto updateDto)
+        {
+            var userModel = await _UserRepository.Put(id, updateDto);
+            if (userModel == null)
+            {
+                return NotFound();
+            }
+            return Ok(userModel.ToUserDto());
+        }
+
 
         public static bool isValid(string email)
         {
