@@ -12,5 +12,7 @@ namespace Catedra_1.src.Interface
         Task<User?> GetByRut(string Rut);         
         Task<User> Post(User user);
         Task <List<User>> GetAll(); 
+
+        Task<User?> Delete(int id);
     }
 }

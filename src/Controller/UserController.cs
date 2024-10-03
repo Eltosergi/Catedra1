@@ -57,6 +57,19 @@ namespace Catedra_1.src.Controller
             return CreatedAtAction(nameof(GetById), new { id = userModel.Id }, userModel.ToUserDto());
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            var product = await _UserRepository.Delete(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return Ok();
+        }
+
+
         public static bool isValid(string email)
         {
             

@@ -17,6 +17,18 @@ namespace Catedra_1.src.Repocitory
             _context = context;
         }
 
+        public async Task<User?> Delete(int id)
+        {
+            var productModel = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            if (productModel == null)
+            {
+                throw new Exception("Product not found");
+            }
+            _context.Users.Remove(productModel);
+            await _context.SaveChangesAsync();
+            return productModel;
+        }
+
         public async Task<List<User>> GetAll()
         {
              return await _context.Users.ToListAsync();
