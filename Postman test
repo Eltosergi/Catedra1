@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "3f2d409f-daa5-45a4-85b4-dc2997d2e1ff",
+		"_postman_id": "4c280859-a3b2-4669-aeff-91a7545f4cc9",
 		"name": "New Collection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "38011692",
-		"_collection_link": "https://sdfsd7-7952.postman.co/workspace/4c791dcf-b7e0-4d8a-944c-dbc8640e8bfb/collection/38011692-3f2d409f-daa5-45a4-85b4-dc2997d2e1ff?action=share&source=collection_link&creator=38011692"
+		"_collection_link": "https://sdfsd7-7952.postman.co/workspace/sdfsd-Workspace~4c791dcf-b7e0-4d8a-944c-dbc8640e8bfb/collection/38011692-4c280859-a3b2-4669-aeff-91a7545f4cc9?action=share&source=collection_link&creator=38011692"
 	},
 	"item": [
 		{
@@ -170,6 +170,118 @@
 						"api",
 						"user",
 						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5011/api/User?sort=desc",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5011/api/User?sort=desc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5011",
+					"path": [
+						"api",
+						"User"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5011/api/User?sort=asc",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5011/api/User?sort=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5011",
+					"path": [
+						"api",
+						"User"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5011/api/User?sort=asc&gender=masculino",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5011/api/User?sort=asc&gender=masculino",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5011",
+					"path": [
+						"api",
+						"User"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "asc"
+						},
+						{
+							"key": "gender",
+							"value": "masculino"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5011/api/User?sort=asc&gender=femenino",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5011/api/User?sort=asc&gender=femenino",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5011",
+					"path": [
+						"api",
+						"User"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "asc"
+						},
+						{
+							"key": "gender",
+							"value": "femenino"
+						}
 					]
 				}
 			},

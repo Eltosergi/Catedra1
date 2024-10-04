@@ -31,9 +31,18 @@ namespace Catedra_1.src.Controller
 
             if (!string.IsNullOrEmpty(sort))
             {
-                users = sort.ToLower() == "asc" 
-                    ? users.OrderBy(u => u.Name).ToList() 
-                    : users.OrderByDescending(u => u.Name).ToList();
+                if (sort.ToLower() == "asc")
+                {
+                    users = users.OrderBy(u => u.Name).ToList();
+                }
+                else if (sort.ToLower() == "desc")
+                {
+                    users = users.OrderByDescending(u => u.Name).ToList();
+                }
+                else
+                {
+                    return BadRequest("El parámetro 'sort' solo acepta los valores 'asc' o 'desc'.");
+                }
             }
 
             var userDtos = users.Select(p => p.ToUserDto());
