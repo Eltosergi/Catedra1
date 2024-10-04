@@ -21,12 +21,24 @@ namespace Catedra_1.src.Controller
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(string sort = null, string gender = null)
         {
-            var products = await _UserRepository.GetAll();
-            var productDto = products.Select(p => p.ToUserDto());
+            var users = await _UserRepository.GetAll();
+            if (!string.IsNullOrEmpty(gender))
+            {
+                users = users.Where(u => u.Gender.Equals(gender, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(sort))
+            {
+                users = sort.ToLower() == "asc" 
+                    ? users.OrderBy(u => u.Name).ToList() 
+                    : users.OrderByDescending(u => u.Name).ToList();
+            }
+
+            var userDtos = users.Select(p => p.ToUserDto());
             
-            return Ok(productDto);
+            return Ok(userDtos);
         }
 
         [HttpGet("{id}")]
@@ -49,7 +61,7 @@ namespace Catedra_1.src.Controller
             {
                 return Conflict("El RUT ya existe."); 
             }
-            if(userModel.Name.Length < 3 || !isValid(userModel.Email) || !EsFechaValida(userModel.BirthDay)){
+            if(userModel.Name.Length < 3 || !isValid(userModel.Email) || !EsFechaValida(userModel.BirthDay) || !isValidGenere(userModel.Gender)){
                 return BadRequest("Alguna validación no fue cumplida.");
             }
 
@@ -60,8 +72,8 @@ namespace Catedra_1.src.Controller
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var product = await _UserRepository.Delete(id);
-            if (product == null)
+            var user = await _UserRepository.Delete(id);
+            if (user == null)
             {
                 return NotFound();
             }
@@ -76,6 +88,10 @@ namespace Catedra_1.src.Controller
             if (userModel == null)
             {
                 return NotFound();
+            }
+
+            if(userModel.Name.Length < 3 || !isValid(userModel.Email) || !isValidGenere(userModel.Gender) || !EsFechaValida(userModel.BirthDay)){
+                return BadRequest("Alguna validación no fue cumplida.");
             }
             return Ok(userModel.ToUserDto());
         }
@@ -110,6 +126,15 @@ namespace Catedra_1.src.Controller
 
             return false; 
         }
+        
+        public static bool isValidGenere(string genere){
+            if (genere == "masculino"|| genere =="femenino" || genere == "otro" || genere == "prefiero no decirlo"){
+                return true;
+            }
+            return false;
+        }
+
+
 
     }
 
